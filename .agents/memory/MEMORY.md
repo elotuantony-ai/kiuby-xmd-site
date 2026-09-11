@@ -1,0 +1,1 @@
+- [Legacy bot source](legacy-bot-source.md) — uploaded WhatsApp entrypoint is obfuscated; keep it preserved and decoupled until a safe integration contract exists.

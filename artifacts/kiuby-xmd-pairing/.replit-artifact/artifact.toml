@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Kiuby XMD Pairing"
+description = "A branded WhatsApp pairing website for Kiuby XMD with a guided phone pairing flow, command guide, and deployment-ready presentation."
+version = "1.0.0"
+id = "artifacts/kiuby-xmd-pairing"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23026
+
+[services.development]
+run = "pnpm --filter @workspace/kiuby-xmd-pairing run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/kiuby-xmd-pairing", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/kiuby-xmd-pairing/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23026"
+BASE_PATH = "/"
