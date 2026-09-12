@@ -24,7 +24,7 @@
 .eyebrow { color: #ff483f; font: 500 10px/1 var(--app-font-mono); letter-spacing: .18em; text-transform: uppercase; }
 .section-label { display: flex; align-items: center; gap: 12px; }
 .section-label::before { content: ''; width: 28px; height: 1px; background: #ff483f; }
-.display { font-family: var(--app-font-display); font-weight: 800; letter-spacing: -.06em; line-height: .93; }
+.display { font-family: var(--app-font-display); font-weight: 800; letter-spacing: -.06em; line-height: .93; font-size: clamp(28px, 9vw, 90px); overflow-wrap: break-word; }
 .header-glass { background: rgb(8 8 11 / .82); backdrop-filter: blur(18px); border-bottom: 1px solid rgb(255 255 255 / .1); }
 .nav-link { color: #8f8f9c; transition: color .2s ease; }
 .nav-link:hover { color: #ff6258; }
