@@ -1,5 +1,6 @@
 import heroImage from '@assets/kiuby_menu.png';
-import { useMemo, useState } from 'react';
+import backgroundTrack from '@assets/Lonely_-_ELMAC(256k)_1789166383212.mp3';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -75,6 +76,46 @@ const matrixStreams = [
 
 function copyText(text: string) {
   if (navigator.clipboard) void navigator.clipboard.writeText(text);
+}
+
+function BackgroundAudio() {
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.volume = 0.72;
+    const startAudio = () => {
+      void audio.play().catch(() => {
+        // Browsers may require a user gesture before allowing audible autoplay.
+      });
+    };
+    const interactionEvents = ['pointerdown', 'keydown', 'touchstart', 'click'] as const;
+
+    startAudio();
+    interactionEvents.forEach((eventName) => {
+      window.addEventListener(eventName, startAudio, { once: true });
+    });
+
+    return () => {
+      interactionEvents.forEach((eventName) => {
+        window.removeEventListener(eventName, startAudio);
+      });
+    };
+  }, []);
+
+  return (
+    <audio
+      ref={audioRef}
+      className="background-audio"
+      src={backgroundTrack}
+      autoPlay
+      loop
+      preload="auto"
+      aria-hidden="true"
+    />
+  );
 }
 
 function LoginGate({ onUnlock }: { onUnlock: () => void }) {
@@ -276,7 +317,7 @@ function RoutedErrorBoundary({ children }: { children: ReactNode }) {
 
 function App() {
   const [unlocked, setUnlocked] = useState(false);
-  return <QueryClientProvider client={queryClient}><TooltipProvider>{unlocked ? <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}><RoutedErrorBoundary><Router /></RoutedErrorBoundary></WouterRouter> : <LoginGate onUnlock={() => setUnlocked(true)} />}<Toaster /></TooltipProvider></QueryClientProvider>;
+  return <QueryClientProvider client={queryClient}><TooltipProvider><BackgroundAudio />{unlocked ? <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}><RoutedErrorBoundary><Router /></RoutedErrorBoundary></WouterRouter> : <LoginGate onUnlock={() => setUnlocked(true)} />}<Toaster /></TooltipProvider></QueryClientProvider>;
 }
 
 export default App;
