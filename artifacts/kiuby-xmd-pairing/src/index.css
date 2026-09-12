@@ -1,11 +1,10 @@
-@import url('m)); }
+
   body { @apply font-sans antialiased bg-background text-foreground; margin: 0; }
   button, input { font: inherit; }
   ::selection { background: hsl(var(--primary)); color: white; }
-}
 
 @layer utilities {
- app-font-mono); }
+  .font-mono-custom { font-family: var(--app-font-mono); }
   .font-display { font-family: var(--app-font-display); }
 }
 
